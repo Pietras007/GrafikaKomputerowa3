@@ -13,13 +13,14 @@ namespace Grafika_Komputerowa_3.Constans
         sample2,
         sample3
     }
-    public enum DitheringEnum
+    public enum AlgorithmEnum
     {
-        average,
-        orderedVersion1,
-        orderedVersion2,
-        floydSteinberg,
-        burkes,
-        stucky
+        ditheringAverage,
+        ditheringOrderedVersion1,
+        ditheringOrderedVersion2,
+        ditheringFloydSteinberg,
+        ditheringBurkes,
+        ditheringStucky,
+        popularityAlgorythm
     }
 }

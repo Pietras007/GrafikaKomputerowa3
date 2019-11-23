@@ -22,6 +22,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -31,6 +32,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,9 +48,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\Average.cs" />
+    <Compile Include="Algorithms\ErrorDiffusion.cs" />
+    <Compile Include="Algorithms\Ordered.cs" />
+    <Compile Include="Algorithms\Popularity.cs" />
     <Compile Include="Constans\CONST.cs" />
     <Compile Include="Constans\Enums.cs" />
-    <Compile Include="Dithering\Computing.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
