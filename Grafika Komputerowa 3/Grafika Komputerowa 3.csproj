@@ -54,12 +54,16 @@
     <Compile Include="Algorithms\Popularity.cs" />
     <Compile Include="Constans\CONST.cs" />
     <Compile Include="Constans\Enums.cs" />
+    <Compile Include="Constans\Matrix.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Colors.cs" />
+    <Compile Include="Helpers\Index.cs" />
+    <Compile Include="Helpers\Values.cs" />
     <Compile Include="Picture\SettingColorValues.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

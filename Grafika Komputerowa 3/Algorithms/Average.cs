@@ -30,6 +30,7 @@ namespace Grafika_Komputerowa_3.Algorithms
             }
 
             int average = sumOfAll / (CONST.bitmapWidth * CONST.bitmapHeight);
+            average = 127;
             Parallel.For(0, CONST.bitmapWidth, i =>
             {
                 for (int j = 0; j < CONST.bitmapHeight; j++)
