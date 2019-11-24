@@ -65,6 +65,8 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.button1 = new System.Windows.Forms.Button();
+            this.sample4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sample5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -448,7 +450,9 @@
             this.samplesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.sample1ToolStripMenuItem,
             this.sample2ToolStripMenuItem,
-            this.sample3ToolStripMenuItem});
+            this.sample3ToolStripMenuItem,
+            this.sample4ToolStripMenuItem,
+            this.sample5ToolStripMenuItem});
             this.samplesToolStripMenuItem.Name = "samplesToolStripMenuItem";
             this.samplesToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.samplesToolStripMenuItem.Text = "Samples";
@@ -494,6 +498,20 @@
             this.button1.Text = "Compute";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // sample4ToolStripMenuItem
+            // 
+            this.sample4ToolStripMenuItem.Name = "sample4ToolStripMenuItem";
+            this.sample4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sample4ToolStripMenuItem.Text = "Sample 4";
+            this.sample4ToolStripMenuItem.Click += new System.EventHandler(this.sample4ToolStripMenuItem_Click);
+            // 
+            // sample5ToolStripMenuItem
+            // 
+            this.sample5ToolStripMenuItem.Name = "sample5ToolStripMenuItem";
+            this.sample5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.sample5ToolStripMenuItem.Text = "Sample 5";
+            this.sample5ToolStripMenuItem.Click += new System.EventHandler(this.sample5ToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -562,6 +580,8 @@
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem sample4ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sample5ToolStripMenuItem;
     }
 }
 

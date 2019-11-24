@@ -11,7 +11,9 @@ namespace Grafika_Komputerowa_3.Constans
         picture,
         sample1,
         sample2,
-        sample3
+        sample3,
+        sample4,
+        sample5
     }
     public enum AlgorithmEnum
     {

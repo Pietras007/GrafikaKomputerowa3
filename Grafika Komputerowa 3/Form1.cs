@@ -19,6 +19,8 @@ namespace Grafika_Komputerowa_3
         Color[,] sample1;
         Color[,] sample2;
         Color[,] sample3;
+        Color[,] sample4;
+        Color[,] sample5;
         Color[,] currentImage;
         Color[,] resultColor;
         int Kr;
@@ -82,6 +84,18 @@ namespace Grafika_Komputerowa_3
                 sample3 = SettingColorValues.GetColorsTable(sample32, CONST.bitmapWidth, CONST.bitmapHeight);
             }
 
+            using (Bitmap sample41 = new Bitmap("../../Samples/Picture4.jpg"))
+            using (Bitmap sample42 = new Bitmap(sample41, CONST.bitmapWidth, CONST.bitmapHeight))
+            {
+                sample4 = SettingColorValues.GetColorsTable(sample42, CONST.bitmapWidth, CONST.bitmapHeight);
+            }
+
+            using (Bitmap sample51 = new Bitmap("../../Samples/Picture5.jpg"))
+            using (Bitmap sample52 = new Bitmap(sample51, CONST.bitmapWidth, CONST.bitmapHeight))
+            {
+                sample5 = SettingColorValues.GetColorsTable(sample52, CONST.bitmapWidth, CONST.bitmapHeight);
+            }
+
 
             //Load K-values
             Kr = (int)numericUpDown1.Value;
@@ -111,6 +125,18 @@ namespace Grafika_Komputerowa_3
             pictureBox1.Invalidate();
         }
 
+        private void sample4ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loadedPicture = LoadedPicture.sample4;
+            pictureBox1.Invalidate();
+        }
+
+        private void sample5ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            loadedPicture = LoadedPicture.sample5;
+            pictureBox1.Invalidate();
+        }
+
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -134,8 +160,16 @@ namespace Grafika_Komputerowa_3
                 currentImage = sample3;
                 g.SetColorsToGraphics(sample3);
             }
-
-            //ComputeResultColor();
+            else if (loadedPicture == LoadedPicture.sample4)
+            {
+                currentImage = sample4;
+                g.SetColorsToGraphics(sample4);
+            }
+            else if (loadedPicture == LoadedPicture.sample5)
+            {
+                currentImage = sample5;
+                g.SetColorsToGraphics(sample5);
+            }
         }
 
         private void ComputeResultColor()
@@ -163,25 +197,21 @@ namespace Grafika_Komputerowa_3
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             Kr = (int)numericUpDown1.Value;
-            //ComputeResultColor();
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             Kg = (int)numericUpDown2.Value;
-            //ComputeResultColor();
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             Kb = (int)numericUpDown3.Value;
-            //ComputeResultColor();
         }
 
         private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
             K = (int)numericUpDown4.Value;
-            //ComputeResultColor();
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
@@ -232,43 +262,36 @@ namespace Grafika_Komputerowa_3
         private void radioButton1_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringAverage;
-            //ComputeResultColor();
         }
 
         private void radioButton2_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringOrderedVersion1;
-            //ComputeResultColor();
         }
 
         private void radioButton3_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringOrderedVersion2;
-            //ComputeResultColor();
         }
 
         private void radioButton4_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringFloydSteinberg;
-            //ComputeResultColor();
         }
 
         private void radioButton5_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringBurkes;
-            //ComputeResultColor();
         }
 
         private void radioButton6_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.ditheringStucky;
-            //ComputeResultColor();
         }
 
         private void radioButton7_Click(object sender, EventArgs e)
         {
             algorithm = AlgorithmEnum.popularityAlgorythm;
-            //ComputeResultColor();
         }
 
         private void BlockButtons()
@@ -307,5 +330,6 @@ namespace Grafika_Komputerowa_3
         {
             ComputeResultColor();
         }
+
     }
 }
