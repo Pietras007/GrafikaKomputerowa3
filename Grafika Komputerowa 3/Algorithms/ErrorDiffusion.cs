@@ -14,18 +14,51 @@ namespace Grafika_Komputerowa_3.Algorithms
         public static Color[,] FloydSteinberg(Color[,] currentImage, int Kr, int Kg, int Kb)
         {
             Color[,] transformedImage = (Color[,])currentImage.Clone();
-            for (int i = 0; i < CONST.bitmapWidth; i++)
+            for (int j = 0; j < CONST.bitmapHeight; j++)
             {
-                for (int j = 0; j < CONST.bitmapHeight; j++)
+                for (int i = 0; i < CONST.bitmapWidth; i++)
                 {
-                    int redError = Math.Abs(transformedImage[i, j].R - Colors.GetClosestColor(currentImage[i, j].R, Kr));
-                    int greenError = Math.Abs(transformedImage[i, j].G - Colors.GetClosestColor(currentImage[i, j].G, Kg));
-                    int blueError = Math.Abs(transformedImage[i, j].B - Colors.GetClosestColor(currentImage[i, j].B, Kb));
-                    for (int y = 0; y <= 2 * FloydSteinbergMatrix.y; y++)
+                    Color oldPixel = transformedImage[i, j];
+                    Color newPixel = Colors.GetClosestColor(oldPixel, Kr, Kg, Kb);
+                    transformedImage[i, j] = newPixel;
+                    int redError = oldPixel.R - newPixel.R;
+                    int greenError = oldPixel.G - newPixel.G;
+                    int blueError = oldPixel.B - newPixel.B;
+                    //if (Index.IsCorrectIndex(i + 1, j))
+                    //{
+                    //    int r1 = Values.Round255(transformedImage[i + 1, j].R + redError * 7 / 16);
+                    //    int g1 = Values.Round255(transformedImage[i + 1, j].G + greenError * 7 / 16);
+                    //    int b1 = Values.Round255(transformedImage[i + 1, j].B + blueError * 7 / 16);
+                    //    transformedImage[i + 1, j] = Color.FromArgb(r1, g1, b1);
+                    //}
+                    //if (Index.IsCorrectIndex(i - 1, j + 1))
+                    //{
+                    //    int r2 = Values.Round255(transformedImage[i - 1, j + 1].R + redError * 3 / 16);
+                    //    int g2 = Values.Round255(transformedImage[i - 1, j + 1].G + greenError * 3 / 16);
+                    //    int b2 = Values.Round255(transformedImage[i - 1, j + 1].B + blueError * 3 / 16);
+                    //    transformedImage[i - 1, j + 1] = Color.FromArgb(r2, g2, b2);
+                    //}
+                    //if (Index.IsCorrectIndex(i, j + 1))
+                    //{
+                    //    int r3 = Values.Round255(transformedImage[i, j + 1].R + redError * 5 / 16);
+                    //    int g3 = Values.Round255(transformedImage[i, j + 1].G + greenError * 5 / 16);
+                    //    int b3 = Values.Round255(transformedImage[i, j + 1].B + blueError * 5 / 16);
+                    //    transformedImage[i, j + 1] = Color.FromArgb(r3, g3, b3);
+                    //}
+                    //if (Index.IsCorrectIndex(i + 1, j + 1))
+                    //{
+                    //    int r4 = Values.Round255(transformedImage[i + 1, j + 1].R + redError * 1 / 16);
+                    //    int g4 = Values.Round255(transformedImage[i + 1, j + 1].G + greenError * 1 / 16);
+                    //    int b4 = Values.Round255(transformedImage[i + 1, j + 1].B + blueError * 1 / 16);
+                    //    transformedImage[i + 1, j + 1] = Color.FromArgb(r4, g4, b4);
+                    //}
+
+
+                    for (int x = 0; x <= 2 * FloydSteinbergMatrix.x; x++)
                     {
-                        for (int x = 0; x <= 2 * FloydSteinbergMatrix.x; x++)
+                        for (int y = 0; y <= 2 * FloydSteinbergMatrix.y; y++)
                         {
-                            if (Index.IsCorrectIndex(i + y - FloydSteinbergMatrix.y , j + x - FloydSteinbergMatrix.x))
+                            if (Index.IsCorrectIndex(i + y - FloydSteinbergMatrix.y, j + x - FloydSteinbergMatrix.x))
                             {
                                 Color transformingColor = transformedImage[i + y - FloydSteinbergMatrix.y, j + x - FloydSteinbergMatrix.x];
                                 int r = Values.Round255(transformingColor.R + ((redError * FloydSteinbergMatrix.values[x, y]) / FloydSteinbergMatrix.division));

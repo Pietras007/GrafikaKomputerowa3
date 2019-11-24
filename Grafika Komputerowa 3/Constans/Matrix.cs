@@ -21,8 +21,8 @@ namespace Grafika_Komputerowa_3.Constans
 
     public static class BurkesMatrix
     {
-        public const int x = 2;
-        public const int y = 1;
+        public const int x = 1;
+        public const int y = 2;
         public const int division = 32;
         public static readonly int[,] values =
         {
