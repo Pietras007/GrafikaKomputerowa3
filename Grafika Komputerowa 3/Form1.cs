@@ -1,4 +1,5 @@
-﻿using Grafika_Komputerowa_3.Constans;
+﻿using Grafika_Komputerowa_3.Algorithms;
+using Grafika_Komputerowa_3.Constans;
 using Grafika_Komputerowa_3.Picture;
 using System;
 using System.Collections.Generic;
@@ -19,10 +20,10 @@ namespace Grafika_Komputerowa_3
         Color[,] sample2;
         Color[,] sample3;
         Color[,] currentImage;
-        int numericRed;
-        int numericGreen;
-        int numericBlue;
-        int numericK;
+        int Kr;
+        int Kg;
+        int Kb;
+        int K;
         AlgorithmEnum algorithm;
         LoadedPicture loadedPicture;
         public Form1()
@@ -80,6 +81,12 @@ namespace Grafika_Komputerowa_3
                 sample3 = SettingColorValues.GetColorsTable(sample32, CONST.bitmapWidth, CONST.bitmapHeight);
             }
 
+
+            //Load K-values
+            Kr = (int)numericUpDown1.Value;
+            Kg = (int)numericUpDown2.Value;
+            Kb = (int)numericUpDown3.Value;
+            K = (int)numericUpDown4.Value;
         }
 
         private void sample1ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -165,60 +172,75 @@ namespace Grafika_Komputerowa_3
                 currentImage = sample3;
                 g.SetColorsToGraphics(sample3);
             }
+
+            pictureBox2.Invalidate();
         }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
-            Graphics g = e.Graphics;
-            if(algorithm == AlgorithmEnum.ditheringAverage)
+            if (currentImage != null)
             {
-
-            }
-            else if(algorithm == AlgorithmEnum.ditheringOrderedVersion1)
-            {
-
-            }
-            else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
-            {
-
-            }
-            else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
-            {
-
-            }
-            else if (algorithm == AlgorithmEnum.ditheringBurkes)
-            {
-
-            }
-            else if (algorithm == AlgorithmEnum.ditheringStucky)
-            {
-
-            }
-            else if (algorithm == AlgorithmEnum.popularityAlgorythm)
-            {
-
+                Graphics g = e.Graphics;
+                if (algorithm == AlgorithmEnum.ditheringAverage)
+                {
+                    Color[,] color = Average.ComputeAlgorithm(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.ditheringOrderedVersion1)
+                {
+                    Color[,] color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
+                {
+                    Color[,] color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
+                {
+                    Color[,] color = ErrorDiffusion.FloydSteinberg(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.ditheringBurkes)
+                {
+                    Color[,] color = ErrorDiffusion.Burkes(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.ditheringStucky)
+                {
+                    Color[,] color = ErrorDiffusion.Stucky(currentImage, Kr, Kg, Kb);
+                    g.SetColorsToGraphics(color);
+                }
+                else if (algorithm == AlgorithmEnum.popularityAlgorythm)
+                {
+                    Color[,] color = Popularity.ComputeAlgorithm(currentImage, K);
+                    g.SetColorsToGraphics(color);
+                }
             }
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
-            numericRed = (int)numericUpDown1.Value;
+            Kr = (int)numericUpDown1.Value;
+            pictureBox2.Invalidate();
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
-            numericGreen = (int)numericUpDown2.Value;
+            Kg = (int)numericUpDown2.Value;
+            pictureBox2.Invalidate();
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
-            numericBlue = (int)numericUpDown3.Value;
+            Kb = (int)numericUpDown3.Value;
+            pictureBox2.Invalidate();
         }
 
         private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
-            numericK = (int)numericUpDown4.Value;
+            K = (int)numericUpDown4.Value;
+            pictureBox2.Invalidate();
         }
-
     }
 }
