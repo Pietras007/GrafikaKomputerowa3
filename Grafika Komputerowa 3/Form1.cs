@@ -20,6 +20,7 @@ namespace Grafika_Komputerowa_3
         Color[,] sample2;
         Color[,] sample3;
         Color[,] currentImage;
+        Color[,] resultColor;
         int Kr;
         int Kg;
         int Kb;
@@ -87,6 +88,9 @@ namespace Grafika_Komputerowa_3
             Kg = (int)numericUpDown2.Value;
             Kb = (int)numericUpDown3.Value;
             K = (int)numericUpDown4.Value;
+
+            //ProgressBar invisible
+            progressBar1.Visible = false;
         }
 
         private void sample1ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -107,48 +111,6 @@ namespace Grafika_Komputerowa_3
             pictureBox1.Invalidate();
         }
 
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringAverage;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringOrderedVersion1;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton3_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringOrderedVersion2;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton4_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringFloydSteinberg;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton5_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringBurkes;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton6_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.ditheringStucky;
-            pictureBox2.Invalidate();
-        }
-
-        private void radioButton7_CheckedChanged(object sender, EventArgs e)
-        {
-            algorithm = AlgorithmEnum.popularityAlgorythm;
-            pictureBox2.Invalidate();
-        }
-
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
@@ -157,7 +119,7 @@ namespace Grafika_Komputerowa_3
                 currentImage = picture;
                 g.SetColorsToGraphics(picture);
             }
-            else if(loadedPicture == LoadedPicture.sample1)
+            else if (loadedPicture == LoadedPicture.sample1)
             {
                 currentImage = sample1;
                 g.SetColorsToGraphics(sample1);
@@ -173,74 +135,177 @@ namespace Grafika_Komputerowa_3
                 g.SetColorsToGraphics(sample3);
             }
 
-            pictureBox2.Invalidate();
+            //ComputeResultColor();
+        }
+
+        private void ComputeResultColor()
+        {
+            if (currentImage != null && !backgroundWorker1.IsBusy)
+            {
+                progressBar1.Value = 0;
+                progressBar1.Visible = true;
+                BlockButtons();
+                backgroundWorker1.RunWorkerAsync();
+            }
         }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
-            if (currentImage != null)
+            if (resultColor != null)
             {
                 Graphics g = e.Graphics;
-                if (algorithm == AlgorithmEnum.ditheringAverage)
-                {
-                    Color[,] color = Average.ComputeAlgorithm(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.ditheringOrderedVersion1)
-                {
-                    Color[,] color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
-                {
-                    Color[,] color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
-                {
-                    Color[,] color = ErrorDiffusion.FloydSteinberg(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.ditheringBurkes)
-                {
-                    Color[,] color = ErrorDiffusion.Burkes(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.ditheringStucky)
-                {
-                    Color[,] color = ErrorDiffusion.Stucky(currentImage, Kr, Kg, Kb);
-                    g.SetColorsToGraphics(color);
-                }
-                else if (algorithm == AlgorithmEnum.popularityAlgorythm)
-                {
-                    Color[,] color = Popularity.ComputeAlgorithm(currentImage, K);
-                    g.SetColorsToGraphics(color);
-                }
+                g.SetColorsToGraphics(resultColor);
+                progressBar1.Visible = false;
+                UnBlockButtons();
             }
         }
 
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             Kr = (int)numericUpDown1.Value;
-            pictureBox2.Invalidate();
+            //ComputeResultColor();
         }
 
         private void numericUpDown2_ValueChanged(object sender, EventArgs e)
         {
             Kg = (int)numericUpDown2.Value;
-            pictureBox2.Invalidate();
+            //ComputeResultColor();
         }
 
         private void numericUpDown3_ValueChanged(object sender, EventArgs e)
         {
             Kb = (int)numericUpDown3.Value;
-            pictureBox2.Invalidate();
+            //ComputeResultColor();
         }
 
         private void numericUpDown4_ValueChanged(object sender, EventArgs e)
         {
             K = (int)numericUpDown4.Value;
+            //ComputeResultColor();
+        }
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Color[,] color = null;
+            if (algorithm == AlgorithmEnum.ditheringAverage)
+            {
+                color = Average.ComputeAlgorithm(currentImage, Kr, Kg, Kb, backgroundWorker1);
+            }
+            else if (algorithm == AlgorithmEnum.ditheringOrderedVersion1)
+            {
+                color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb);
+            }
+            else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
+            {
+                color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb);
+            }
+            else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
+            {
+                color = ErrorDiffusion.FloydSteinberg(currentImage, Kr, Kg, Kb, backgroundWorker1);
+            }
+            else if (algorithm == AlgorithmEnum.ditheringBurkes)
+            {
+                color = ErrorDiffusion.Burkes(currentImage, Kr, Kg, Kb, backgroundWorker1);
+            }
+            else if (algorithm == AlgorithmEnum.ditheringStucky)
+            {
+                color = ErrorDiffusion.Stucky(currentImage, Kr, Kg, Kb, backgroundWorker1);
+            }
+            else if (algorithm == AlgorithmEnum.popularityAlgorythm)
+            {
+                color = Popularity.ComputeAlgorithm(currentImage, K);
+            }
+            e.Result = color;
+        }
+
+        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            progressBar1.Value = e.ProgressPercentage;
+        }
+
+        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            resultColor = (Color[,])e.Result;
             pictureBox2.Invalidate();
+        }
+
+        private void radioButton1_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringAverage;
+            //ComputeResultColor();
+        }
+
+        private void radioButton2_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringOrderedVersion1;
+            //ComputeResultColor();
+        }
+
+        private void radioButton3_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringOrderedVersion2;
+            //ComputeResultColor();
+        }
+
+        private void radioButton4_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringFloydSteinberg;
+            //ComputeResultColor();
+        }
+
+        private void radioButton5_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringBurkes;
+            //ComputeResultColor();
+        }
+
+        private void radioButton6_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.ditheringStucky;
+            //ComputeResultColor();
+        }
+
+        private void radioButton7_Click(object sender, EventArgs e)
+        {
+            algorithm = AlgorithmEnum.popularityAlgorythm;
+            //ComputeResultColor();
+        }
+
+        private void BlockButtons()
+        {
+            radioButton1.Enabled = false;
+            radioButton2.Enabled = false;
+            radioButton3.Enabled = false;
+            radioButton4.Enabled = false;
+            radioButton5.Enabled = false;
+            radioButton6.Enabled = false;
+            radioButton7.Enabled = false;
+            numericUpDown1.Enabled = false;
+            numericUpDown2.Enabled = false;
+            numericUpDown3.Enabled = false;
+            numericUpDown4.Enabled = false;
+            button1.Enabled = false;
+        }
+
+        private void UnBlockButtons()
+        {
+            radioButton1.Enabled = true;
+            radioButton2.Enabled = true;
+            radioButton3.Enabled = true;
+            radioButton4.Enabled = true;
+            radioButton5.Enabled = true;
+            radioButton6.Enabled = true;
+            radioButton7.Enabled = true;
+            numericUpDown1.Enabled = true;
+            numericUpDown2.Enabled = true;
+            numericUpDown3.Enabled = true;
+            numericUpDown4.Enabled = true;
+            button1.Enabled = true;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            ComputeResultColor();
         }
     }
 }

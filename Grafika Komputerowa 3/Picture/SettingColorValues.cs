@@ -54,7 +54,6 @@ namespace Grafika_Komputerowa_3.Picture
                         });
                         processedBitmap.UnlockBits(bitmapData);
                     }
-
                     graphics.DrawImage(processedBitmap, 0, 0);
                 }
             }

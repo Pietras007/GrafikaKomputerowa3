@@ -1,6 +1,7 @@
 ﻿using Grafika_Komputerowa_3.Constans;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Grafika_Komputerowa_3.Algorithms
 {
     public static class Average
     {
-        public static Color[,] ComputeAlgorithm(Color[,] currentImage, int Kr, int Kg, int Kb)
+        public static Color[,] ComputeAlgorithm(Color[,] currentImage, int Kr, int Kg, int Kb, BackgroundWorker backgroundWorker)
         {
             Color[,] image = new Color[CONST.bitmapWidth, CONST.bitmapHeight];
             int[] sum = new int[CONST.bitmapWidth];
@@ -29,6 +30,7 @@ namespace Grafika_Komputerowa_3.Algorithms
                 sumOfAll += sum[i];
             }
 
+            backgroundWorker.ReportProgress(50);
             int average = sumOfAll / (CONST.bitmapWidth * CONST.bitmapHeight);
             average = 127;
             Parallel.For(0, CONST.bitmapWidth, i =>
@@ -46,7 +48,7 @@ namespace Grafika_Komputerowa_3.Algorithms
                     }
                 }
             });
-
+            backgroundWorker.ReportProgress(100);
             return image;
         }
     }
