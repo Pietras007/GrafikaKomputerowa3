@@ -14,14 +14,14 @@ namespace Grafika_Komputerowa_3.Algorithms
     {
         public static Color[,] FloydSteinberg(Color[,] currentImage, int Kr, int Kg, int Kb, BackgroundWorker backgroundWorker)
         {
-            Color[] listOfAvailableColors = Colors.GetAvailableColors(Kr, Kg, Kb);
+            Color[,,] listOfAvailableColors = Colors.GetAllAvailableColors(Kr, Kg, Kb);
             Color[,] transformedImage = (Color[,])currentImage.Clone();
             for (int j = 0; j < CONST.bitmapHeight; j++)
             {
                 for (int i = 0; i < CONST.bitmapWidth; i++)
                 {
                     Color oldPixel = transformedImage[i, j];
-                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel, Kr, Kg, Kb);
+                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel);
                     transformedImage[i, j] = newPixel;
                     int redError = oldPixel.R - newPixel.R;
                     int greenError = oldPixel.G - newPixel.G;
@@ -51,14 +51,14 @@ namespace Grafika_Komputerowa_3.Algorithms
 
         public static Color[,] Burkes(Color[,] currentImage, int Kr, int Kg, int Kb, BackgroundWorker backgroundWorker)
         {
-            Color[] listOfAvailableColors = Colors.GetAvailableColors(Kr, Kg, Kb);
+            Color[,,] listOfAvailableColors = Colors.GetAllAvailableColors(Kr, Kg, Kb);
             Color[,] transformedImage = (Color[,])currentImage.Clone();
             for (int j = 0; j < CONST.bitmapHeight; j++)
             {
                 for (int i = 0; i < CONST.bitmapWidth; i++)
                 {
                     Color oldPixel = transformedImage[i, j];
-                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel, Kr, Kg, Kb);
+                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel);
                     transformedImage[i, j] = newPixel;
                     int redError = oldPixel.R - newPixel.R;
                     int greenError = oldPixel.G - newPixel.G;
@@ -88,15 +88,14 @@ namespace Grafika_Komputerowa_3.Algorithms
 
         public static Color[,] Stucky(Color[,] currentImage, int Kr, int Kg, int Kb, BackgroundWorker backgroundWorker)
         {
-            Color[] listOfAvailableColors = Colors.GetAvailableColors(Kr, Kg, Kb);
+            Color[,,] listOfAvailableColors = Colors.GetAllAvailableColors(Kr, Kg, Kb);
             Color[,] transformedImage = (Color[,])currentImage.Clone();
             for (int j = 0; j < CONST.bitmapHeight; j++)
             {
                 for (int i = 0; i < CONST.bitmapWidth; i++)
                 {
                     Color oldPixel = transformedImage[i, j];
-                    //Color newPixel = Colors.GetClosestColor(oldPixel, Kr, Kg, Kb);
-                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel, Kr, Kg, Kb);
+                    Color newPixel = Colors.GetClosestColor(listOfAvailableColors, oldPixel);
                     transformedImage[i, j] = newPixel;
                     int redError = oldPixel.R - newPixel.R;
                     int greenError = oldPixel.G - newPixel.G;

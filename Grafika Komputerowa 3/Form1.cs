@@ -243,7 +243,7 @@ namespace Grafika_Komputerowa_3
             }
             else if (algorithm == AlgorithmEnum.popularityAlgorythm)
             {
-                color = Popularity.ComputeAlgorithm(currentImage, K);
+                color = Popularity.ComputeAlgorithm(currentImage, K, backgroundWorker1);
             }
             e.Result = color;
         }

@@ -17,6 +17,5 @@ namespace Grafika_Komputerowa_3.Helpers
             }
             return true;
         }
-
     }
 }

@@ -32,6 +32,7 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.numericUpDown4 = new System.Windows.Forms.NumericUpDown();
@@ -62,11 +63,10 @@
             this.sample1ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sample2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sample3ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.button1 = new System.Windows.Forms.Button();
             this.sample4ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sample5ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.panel1.SuspendLayout();
@@ -134,6 +134,16 @@
             this.panel2.Size = new System.Drawing.Size(167, 563);
             this.panel2.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 460);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(143, 23);
+            this.button1.TabIndex = 21;
+            this.button1.Text = "Compute";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // label11
             // 
             this.label11.AutoSize = true;
@@ -155,12 +165,12 @@
             // 
             this.numericUpDown4.Location = new System.Drawing.Point(57, 369);
             this.numericUpDown4.Maximum = new decimal(new int[] {
-            256,
+            16777216,
             0,
             0,
             0});
             this.numericUpDown4.Minimum = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -168,7 +178,7 @@
             this.numericUpDown4.Size = new System.Drawing.Size(75, 20);
             this.numericUpDown4.TabIndex = 18;
             this.numericUpDown4.Value = new decimal(new int[] {
-            2,
+            1,
             0,
             0,
             0});
@@ -478,6 +488,20 @@
             this.sample3ToolStripMenuItem.Text = "Sample 3";
             this.sample3ToolStripMenuItem.Click += new System.EventHandler(this.sample3ToolStripMenuItem_Click);
             // 
+            // sample4ToolStripMenuItem
+            // 
+            this.sample4ToolStripMenuItem.Name = "sample4ToolStripMenuItem";
+            this.sample4ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.sample4ToolStripMenuItem.Text = "Sample 4";
+            this.sample4ToolStripMenuItem.Click += new System.EventHandler(this.sample4ToolStripMenuItem_Click);
+            // 
+            // sample5ToolStripMenuItem
+            // 
+            this.sample5ToolStripMenuItem.Name = "sample5ToolStripMenuItem";
+            this.sample5ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.sample5ToolStripMenuItem.Text = "Sample 5";
+            this.sample5ToolStripMenuItem.Click += new System.EventHandler(this.sample5ToolStripMenuItem_Click);
+            // 
             // openFileDialog1
             // 
             this.openFileDialog1.FileName = "openFileDialog1";
@@ -488,30 +512,6 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(12, 460);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(143, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "Compute";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // sample4ToolStripMenuItem
-            // 
-            this.sample4ToolStripMenuItem.Name = "sample4ToolStripMenuItem";
-            this.sample4ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.sample4ToolStripMenuItem.Text = "Sample 4";
-            this.sample4ToolStripMenuItem.Click += new System.EventHandler(this.sample4ToolStripMenuItem_Click);
-            // 
-            // sample5ToolStripMenuItem
-            // 
-            this.sample5ToolStripMenuItem.Name = "sample5ToolStripMenuItem";
-            this.sample5ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.sample5ToolStripMenuItem.Text = "Sample 5";
-            this.sample5ToolStripMenuItem.Click += new System.EventHandler(this.sample5ToolStripMenuItem_Click);
             // 
             // Form1
             // 

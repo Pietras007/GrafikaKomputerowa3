@@ -1,6 +1,7 @@
 ﻿using Grafika_Komputerowa_3.Constans;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -10,116 +11,111 @@ namespace Grafika_Komputerowa_3.Helpers
 {
     public static class Colors
     {
-        public static Color[] GetAvailableColors(int Kr, int Kg, int Kb)
+        public static Color[,,] GetAllAvailableColors(int Kr, int Kg, int Kb)
         {
-            Color[] colors = new Color[Kr * Kg * Kb];
-            Parallel.For(0, Kr, i =>
-            //for(int i=0;i<Kr;i++)
+            Color[,,] colors = new Color[256, 256, 256];
+            Parallel.For(0, 256, r =>
             {
-                for (int j = 0; j < Kg; j++)
+                for (int g = 0; g < 256; g++)
                 {
-                    for (int k = 0; k < Kb; k++)
+                    for (int b = 0; b < 256; b++)
                     {
-                        int colR = GetColor(i, Kr);
-                        int colG = GetColor(j, Kg);
-                        int colB = GetColor(k, Kb);
-                        colors[i * Kg * Kb + j * Kb + k] = Color.FromArgb(colR, colG, colB);
+                        int R = GetColorNearby(r, Kr);
+                        int G = GetColorNearby(g, Kg);
+                        int B = GetColorNearby(b, Kb);
+                        colors[r, g, b] = Color.FromArgb(R, G, B);
                     }
+                }
+            });
+            return colors;
+        }
+
+        public static int GetColorNearby(int value, int K)
+        {
+            int parts = (K - 1) * 2;
+            double amountInPart = (double)255 / parts;
+            int whichPart = (int)(value / amountInPart);
+            int i = whichPart / 2 + whichPart % 2;
+            return (int)(i * 2 * amountInPart);
+        }
+
+        public static Color GetClosestColor(Color[,,] allColors, Color color)
+        {
+            return allColors[color.R, color.G, color.B];
+        }
+
+        public static Color[,,] GetAllAvailableColors(Color[,] image, int K, BackgroundWorker backgroundWorker)
+        {
+            int[,,] amount = new int[256, 256, 256];
+            (Color, int)[] colorAmount = new (Color, int)[256 * 256 * 256];
+            for(int i=0; i < CONST.bitmapWidth; i++)
+            {
+                for (int j = 0; j < CONST.bitmapHeight; j++)
+                {
+                    amount[image[i, j].R, image[i, j].G, image[i, j].B]++;
+                }
+            }
+
+            backgroundWorker.ReportProgress(5);
+            Parallel.For(0, 256, i =>
+            {
+                for (int j = 0; j < 256; j++)
+                {
+                    for (int k = 0; k < 256; k++)
+                    {
+                        colorAmount[i * 256 * 256 + j * 256 + k] = (Color.FromArgb(i, j, k), amount[i, j, k]);
+                    }
+                }
+            });
+
+            backgroundWorker.ReportProgress(40);
+            (Color, int)[] sortedColors = colorAmount.OrderByDescending(x => x.Item2).ToArray();
+            Color[] availableColors = new Color[K];
+            for(int i=0;i<K;i++)
+            {
+                availableColors[i] = sortedColors[i].Item1;
+            }
+
+            Color[,,] colors = new Color[256, 256, 256];
+            object SyncObject = new object();
+            double index = 40;
+            Parallel.For(0, 256, r =>
+            {
+                for (int g = 0; g < 256; g++)
+                {
+                    for (int b = 0; b < 256; b++)
+                    {
+                        colors[r, g, b] = GetClosestColor(availableColors, r, g, b);
+                    }
+                }
+
+                lock(SyncObject)
+                {
+                    index += (double)60 / 256;
+                    backgroundWorker.ReportProgress((int)index);
                 }
             });
 
             return colors;
         }
-
-        public static Color GetClosestColor(Color[] colorsTab, Color color, int Kr, int Kg, int Kb)
-        {
-            int indexColor = -1;
-            if (Kr * Kg * Kb > 200)
-            {
-                int[] index = new int[CONST.threadsNumber];
-                double[] distance = new double[CONST.threadsNumber];
-                Parallel.For(0, CONST.threadsNumber, thread =>
-                {
-                    distance[thread] = double.MaxValue;
-                    for (int i = thread; i < colorsTab.Length; i += CONST.threadsNumber)
-                    {
-                        int redDiff = color.R - colorsTab[i].R;
-                        int greenDiff = color.G - colorsTab[i].G;
-                        int blueDiff = color.B - colorsTab[i].B;
-                        double currentDistance = Math.Pow(redDiff, 2) + Math.Pow(greenDiff, 2) + Math.Pow(blueDiff, 2);
-                        if (currentDistance < distance[thread])
-                        {
-                            distance[thread] = currentDistance;
-                            index[thread] = i;
-                        }
-                    }
-                });
-
-                double min = double.MaxValue;
-                for (int i = 0; i < CONST.threadsNumber; i++)
-                {
-                    if (distance[i] < min)
-                    {
-                        min = distance[i];
-                        indexColor = index[i];
-                    }
-                }
-            }
-            else
-            {
-                double distance2 = double.MaxValue;
-                for (int i = 0; i < colorsTab.Length; i++)
-                {
-                    int redDiff = color.R - colorsTab[i].R;
-                    int greenDiff = color.G - colorsTab[i].G;
-                    int blueDiff = color.B - colorsTab[i].B;
-                    double currentDistance = Math.Pow(redDiff, 2) + Math.Pow(greenDiff, 2) + Math.Pow(blueDiff, 2);
-                    if (currentDistance < distance2)
-                    {
-                        distance2 = currentDistance;
-                        indexColor = i;
-                    }
-                }
-            }
-
-            return colorsTab[indexColor];
-        }
-
-        public static Color GetClosestColor(Color color, int Kr, int Kg, int Kb)
+        public static Color GetClosestColor(Color[] availableColors, int R, int G, int B)
         {
             Color closestColor = Color.FromArgb(0, 0, 0);
-            double distance = int.MaxValue;
-
-            for (int i = 0; i < Kr; i++)
+            double distance = double.MaxValue;
+            for(int i=0;i<availableColors.Length;i++)
             {
-                for (int j = 0; j < Kg; j++)
+                int diffR = R - availableColors[i].R;
+                int diffG = G - availableColors[i].G;
+                int diffB = B - availableColors[i].B;
+                double currentDistance = Math.Pow(diffR, 2) + Math.Pow(diffG, 2) + Math.Pow(diffB, 2);
+                if(currentDistance < distance)
                 {
-                    for (int k = 0; k < Kb; k++)
-                    {
-                        int colR = GetColor(i, Kr);
-                        int colG = GetColor(j, Kg);
-                        int colB = GetColor(k, Kb);
-                        int redDiff = color.R - colR;
-                        int greenDiff = color.G - colG;
-                        int blueDiff = color.B - colB;
-                        double currentDistance = Math.Pow(redDiff, 2) + Math.Pow(greenDiff, 2) + Math.Pow(blueDiff, 2);
-                        if (currentDistance < distance)
-                        {
-                            distance = currentDistance;
-                            closestColor = Color.FromArgb(color.A, colR, colG, colB);
-                        }
-                    }
+                    distance = currentDistance;
+                    closestColor = availableColors[i];
                 }
             }
 
             return closestColor;
-        }
-
-        private static int GetColor(int i, int K)
-        {
-            double parts = (K - 1) * 2;
-            double amountInPart = 255 / parts;
-            return (int)(i * 2 * amountInPart);
         }
     }
 }
