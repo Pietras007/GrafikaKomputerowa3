@@ -224,11 +224,11 @@ namespace Grafika_Komputerowa_3
             }
             else if (algorithm == AlgorithmEnum.ditheringOrderedVersion1)
             {
-                color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb, rnd);
+                color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb, rnd, backgroundWorker1);
             }
             else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
             {
-                color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb, rnd);
+                color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb, rnd, backgroundWorker1);
             }
             else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
             {
