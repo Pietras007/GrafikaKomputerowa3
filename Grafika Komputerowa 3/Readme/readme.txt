@@ -9,7 +9,7 @@ Metody ditheringu:
 Algorytm popularnosciowy.
 
 W projekcie załączonych jest 5 przykładowych obrazków które pokazują poprawnosć działania wymienionych wyżej algorytmów.
-Szczególnie przykład 4 ukazuje poprawność działania metody uprządkowanego drżenia oraz algorytmu popularnościowego.
+Szczególnie obrazek 4 ukazuje poprawność działania metody uprządkowanego drżenia oraz algorytmu popularnościowego, a obrazek 5 - metody średniej.
 
 Sposób użytkowania:
 Aplikacja pozwala załaczyć swoje własne zdjęcie za pomocą: File -> LoadPicture
