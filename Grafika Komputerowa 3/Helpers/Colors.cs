@@ -44,7 +44,7 @@ namespace Grafika_Komputerowa_3.Helpers
             return allColors[color.R, color.G, color.B];
         }
 
-        public static Color[,,] GetAllAvailableColors(Color[,] image, int K, BackgroundWorker backgroundWorker)
+        public static Color[] GetAllAvailableColors(Color[,] image, int K, BackgroundWorker backgroundWorker)
         {
             int[,,] amount = new int[256, 256, 256];
             (Color, int)[] colorAmount = new (Color, int)[256 * 256 * 256];
@@ -76,27 +76,7 @@ namespace Grafika_Komputerowa_3.Helpers
                 availableColors[i] = sortedColors[i].Item1;
             }
 
-            Color[,,] colors = new Color[256, 256, 256];
-            object SyncObject = new object();
-            double index = 40;
-            Parallel.For(0, 256, r =>
-            {
-                for (int g = 0; g < 256; g++)
-                {
-                    for (int b = 0; b < 256; b++)
-                    {
-                        colors[r, g, b] = GetClosestColor(availableColors, r, g, b);
-                    }
-                }
-
-                lock(SyncObject)
-                {
-                    index += (double)60 / 256;
-                    backgroundWorker.ReportProgress((int)index);
-                }
-            });
-
-            return colors;
+            return availableColors;
         }
         public static Color GetClosestColor(Color[] availableColors, int R, int G, int B)
         {

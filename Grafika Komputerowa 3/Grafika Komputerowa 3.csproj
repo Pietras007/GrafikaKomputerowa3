@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="Readme\readme.txt" />
     <Content Include="Samples\Picture1.jpg" />
     <Content Include="Samples\Picture2.jpg" />
     <Content Include="Samples\Picture3.jpg" />
