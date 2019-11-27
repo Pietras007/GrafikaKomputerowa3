@@ -10,6 +10,5 @@ namespace Grafika_Komputerowa_3.Constans
     {
         public const int bitmapWidth = 787;
         public const int bitmapHeight = 569;
-        public const int threadsNumber = 12;
     }
 }

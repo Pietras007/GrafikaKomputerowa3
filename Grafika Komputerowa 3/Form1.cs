@@ -29,6 +29,7 @@ namespace Grafika_Komputerowa_3
         int K;
         AlgorithmEnum algorithm;
         LoadedPicture loadedPicture;
+        Random rnd = new Random();
         public Form1()
         {
             InitializeComponent();
@@ -84,7 +85,7 @@ namespace Grafika_Komputerowa_3
                 sample3 = SettingColorValues.GetColorsTable(sample32, CONST.bitmapWidth, CONST.bitmapHeight);
             }
 
-            using (Bitmap sample41 = new Bitmap("../../Samples/Picture4.jpg"))
+            using (Bitmap sample41 = new Bitmap("../../Samples/Picture4.bmp"))
             using (Bitmap sample42 = new Bitmap(sample41, CONST.bitmapWidth, CONST.bitmapHeight))
             {
                 sample4 = SettingColorValues.GetColorsTable(sample42, CONST.bitmapWidth, CONST.bitmapHeight);
@@ -223,11 +224,11 @@ namespace Grafika_Komputerowa_3
             }
             else if (algorithm == AlgorithmEnum.ditheringOrderedVersion1)
             {
-                color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb);
+                color = Ordered.ComputeAlgorithmVersion1(currentImage, Kr, Kg, Kb, rnd);
             }
             else if (algorithm == AlgorithmEnum.ditheringOrderedVersion2)
             {
-                color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb);
+                color = Ordered.ComputeAlgorithmVersion2(currentImage, Kr, Kg, Kb, rnd);
             }
             else if (algorithm == AlgorithmEnum.ditheringFloydSteinberg)
             {
