@@ -17,7 +17,7 @@ namespace Grafika_Komputerowa_3.Algorithms
             int nR = OrderedHelper.GetClosestN(Kr);
             int nG = OrderedHelper.GetClosestN(Kg);
             int nB = OrderedHelper.GetClosestN(Kb);
-            Parallel.For(0, CONST.bitmapWidth, i =>
+            for(int i=0;i<CONST.bitmapWidth;i++)
             {
                 for (int j = 0; j < CONST.bitmapHeight; j++)
                 {
@@ -26,7 +26,7 @@ namespace Grafika_Komputerowa_3.Algorithms
                     int b = Values.Round255(OrderedHelper.GetColorForOrdered(currentImage[i, j].B, nB, random, -1, -1));
                     image[i, j] = Color.FromArgb(r, g, b);
                 }
-            });
+            }
 
             return image;
         }

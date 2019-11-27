@@ -29,7 +29,6 @@ namespace Grafika_Komputerowa_3
         int K;
         AlgorithmEnum algorithm;
         LoadedPicture loadedPicture;
-        Random rnd = new Random();
         public Form1()
         {
             InitializeComponent();
@@ -217,6 +216,7 @@ namespace Grafika_Komputerowa_3
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
+            Random rnd = new Random();
             Color[,] color = null;
             if (algorithm == AlgorithmEnum.ditheringAverage)
             {

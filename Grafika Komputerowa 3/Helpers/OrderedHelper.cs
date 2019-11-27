@@ -25,9 +25,8 @@ namespace Grafika_Komputerowa_3.Helpers
             return n;
         }
 
-        public static int GetColorForOrdered(int color, int n, Random random1, int x, int y)
+        public static int GetColorForOrdered(int color, int n, Random random, int x, int y)
         {
-            Random random = new Random();
             int i = random.Next(n);
             int j = random.Next(n);
             if (n == 2)
@@ -68,7 +67,7 @@ namespace Grafika_Komputerowa_3.Helpers
                 int n2 = (int)Math.Pow(n, 2);
                 int col = color / n2;
                 int re = color % n2;
-                if (re > values[i, j] || re == 255)
+                if (re > values[i, j] || color == 255)
                 {
                     col++;
                 }
@@ -83,7 +82,7 @@ namespace Grafika_Komputerowa_3.Helpers
                 int re = color % n2;
                 int _i = x % n;
                 int _j = y % n;
-                if (re > values[_i, _j] || re == 255)
+                if (re > values[_i, _j] || color == 255)
                 {
                     col++;
                 }
